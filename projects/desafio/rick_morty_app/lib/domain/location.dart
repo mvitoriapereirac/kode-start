@@ -3,7 +3,9 @@ class Location {
   final String name; 
   final String url;
 
-  Location({required this.name, required this.url});
+  Location({required this.name, required this.url}) {
+    _setIdFromUrl();
+  }
 
   int getId() {
     return _id;

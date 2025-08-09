@@ -3,7 +3,9 @@ class Episode {
   late final String name; 
   final String url;
 
-  Episode({required this.url});
+  Episode({required this.url}) {
+    _setIdFromUrl();
+  }
 
   /// Define o valor do campo privado [_id].
   ///
