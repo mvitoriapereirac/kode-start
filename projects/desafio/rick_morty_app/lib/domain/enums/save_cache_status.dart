@@ -1,0 +1,4 @@
+enum SaveCacheStatus {
+  success,
+  error
+}
