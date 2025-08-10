@@ -11,9 +11,9 @@ class Character {
   final String species;
   final Gender gender;
   final Location lastKnownLocation;
-  final List<Episode> firstAppearedAt;
+  final List<Episode> appearedAt;
 
-  Character(this._id, {required this.name, required this.imageUrl, required this.species, required this.gender, required this.status, required this.lastKnownLocation, required this.firstAppearedAt});
+  Character(this._id, {required this.name, required this.imageUrl, required this.species, required this.gender, required this.status, required this.lastKnownLocation, required this.appearedAt});
 
   int get id => _id;
 
@@ -26,7 +26,7 @@ class Character {
       gender: Gender.fromString(map['gender']),
       status: Status.fromString(map['status']),
       lastKnownLocation: Location.fromMap(map['location']),
-      firstAppearedAt: (map['episode'] as List)
+      appearedAt: (map['episode'] as List)
           .map<Episode>((e) => Episode.fromMap(e))
           .toList(),
    );

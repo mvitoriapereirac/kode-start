@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:rick_morty_app/data/services/api_service.dart';
 import 'package:rick_morty_app/domain/episode.dart';
 import 'package:rick_morty_app/domain/episode_repository.dart';
@@ -9,13 +8,16 @@ class EpisodeRepo extends EpisodeRepository {
 
   @override
   Future<Result<Episode>> getEpisode(String id) async {
-    final response = await apiService.getRequest('episode/$id');
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.data);
-      final episode = Episode.fromMap(data);
-      return Result<Episode>(data: episode);
+    try {
+      final response = await apiService.getRequest('episode/$id');
+      if (response.statusCode == 200) {
+        final episode = Episode.fromMap(response.data);
+        return Result<Episode>(data: episode);
+      }
+      return Result(error: response.statusMessage);
+    } on Exception catch (e) {
+      return Result(error: e.toString());
     }
-    return Result(error: response.statusMessage);
   }
 
 }

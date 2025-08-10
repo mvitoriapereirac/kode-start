@@ -14,39 +14,20 @@ class ApiService {
   factory ApiService() => _instance;
 
   Future<Response> getRequest(String path) async {
-    try {
-      final response = await _dio.get(path);
-      return response;
-    } on DioException catch (e) {
-      // Handle Dio errors (e.g., network issues, server errors)
-      throw Exception('Failed to load data: ${e.message}');
-    }
+    return await _dio.get(path);
   }
 
   Future<Response> postRequest(String path, dynamic data) async {
-    try {
-      final response = await _dio.post(path, data: data);
-      return response;
-    } on DioException catch (e) {
-      throw Exception('Failed to post data: ${e.message}');
-    }
+    return await _dio.post(path, data: data); 
   }
 
   Future<Response> deleteRequest(String path, dynamic data) async {
-    try {
-      final response = await _dio.delete(path, data: data);
-      return response;
-    } on DioException catch (e) {
-      throw Exception('Failed to delete data: ${e.message}');
-    }
+    return await _dio.delete(path, data: data);
+    
+    
   }
 
   Future<Response> putRequest(String path, dynamic data) async {
-    try {
-      final response = await _dio.put(path, data: data);
-      return response;
-    } on DioException catch (e) {
-      throw Exception('Failed to put data: ${e.message}');
-    }
+    return await _dio.put(path, data: data);
   }
 }

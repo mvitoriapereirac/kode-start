@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:rick_morty_app/data/services/api_service.dart';
 import 'package:rick_morty_app/domain/character.dart';
 import 'package:rick_morty_app/domain/character_repository.dart';
@@ -8,14 +7,22 @@ class CharacterRepo extends CharacterRepository {
   final apiService = ApiService();
 
   @override
-  Future<Result<List<Character>>> getCharactersList() async {
-    final response = await apiService.getRequest('character');
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.data);
-      final characterList = (data as List).map((e) => Character.fromMap(e)).cast<Character>().toList();
-      return Result<List<Character>>(data: characterList);
+  Future<Result<List<Character>>> getCharactersList(int? page) async {
+    var path = 'character';
+    if (page != null) {
+      path = '$path/?page=$page';
     }
-    return Result<List<Character>>(error: response.statusMessage);
+    try {
+      final response = await apiService.getRequest(path);
+      if (response.statusCode == 200) {
+      final results = response.data['results'];
+        final characterList = (results as List).map((e) => Character.fromMap(e)).cast<Character>().toList();
+        return Result<List<Character>>(data: characterList);
+      }
+      return Result<List<Character>>(error: response.statusMessage);
+    } on Exception catch (e) {
+      return Result<List<Character>>(error: e.toString());
+    }
   }
 
   @override
