@@ -23,8 +23,6 @@ class ApiService {
 
   Future<Response> deleteRequest(String path, dynamic data) async {
     return await _dio.delete(path, data: data);
-    
-    
   }
 
   Future<Response> putRequest(String path, dynamic data) async {

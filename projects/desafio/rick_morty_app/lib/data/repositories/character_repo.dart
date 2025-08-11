@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:rick_morty_app/data/services/api_service.dart';
 import 'package:rick_morty_app/domain/character.dart';
 import 'package:rick_morty_app/domain/character_repository.dart';
 import 'package:rick_morty_app/domain/utils/result.dart';
 
-class CharacterRepo extends CharacterRepository {
-  final apiService = ApiService();
+class CharacterRepo extends ChangeNotifier implements CharacterRepository {
+  CharacterRepo({required ApiService apiService})
+          : _apiService = apiService;
 
+  late final ApiService _apiService;
   @override
   Future<Result<List<Character>>> getCharactersList(int? page) async {
     var path = 'character';
@@ -13,7 +16,7 @@ class CharacterRepo extends CharacterRepository {
       path = '$path/?page=$page';
     }
     try {
-      final response = await apiService.getRequest(path);
+      final response = await _apiService.getRequest(path);
       if (response.statusCode == 200) {
       final results = response.data['results'];
         final characterList = (results as List).map((e) => Character.fromMap(e)).cast<Character>().toList();
