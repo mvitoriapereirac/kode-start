@@ -6,7 +6,6 @@ import 'package:rick_morty_app/data/services/api_service.dart';
 import 'package:rick_morty_app/domain/character_repository.dart';
 import 'package:rick_morty_app/domain/episode_repository.dart';
 import 'package:rick_morty_app/main.dart';
-import 'package:rick_morty_app/routing/router.dart';
 
 void injectDependencies() {
   runApp(

@@ -19,23 +19,27 @@ GoRouter router(
   refreshListenable: characterRepo as Listenable,
   routes: [
     GoRoute(
-      path: Routes.home, 
-      builder: (context, state) {
-        return CharactersListScreen(
-          viewModel: CharactersViewModel(
-            characterRepo: context.read(),
-          )
+      path: Routes.home,
+      pageBuilder: (context, state) {
+        return NoTransitionPage(
+          child: CharactersListScreen(
+            viewModel: CharactersViewModel(
+              characterRepo: context.read(),
+            )
+          ),
         );
       }),
     GoRoute(
       path: Routes.details,
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final character = state.extra as Character;
-        return CharacterDetailsScreen(
-          viewModel: DetailsViewModel(
-            episodeRepository: context.read(),
-            character: character
-            ),
+        return NoTransitionPage(
+          child: CharacterDetailsScreen(
+            viewModel: DetailsViewModel(
+              episodeRepository: context.read(),
+              character: character
+              ),
+          ),
         );
       }
     )

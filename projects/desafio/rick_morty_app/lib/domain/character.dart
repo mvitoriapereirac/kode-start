@@ -27,7 +27,7 @@ class Character {
       status: Status.fromString(map['status']),
       lastKnownLocation: Location.fromMap(map['location']),
       appearedAt: (map['episode'] as List)
-          .map<Episode>((e) => Episode.fromMap(e))
+          .map<Episode>((e) => Episode(url: e))
           .toList(),
    );
   }

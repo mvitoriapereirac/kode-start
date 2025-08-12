@@ -6,7 +6,6 @@ class Episode {
   Episode({required this.url}) {
     _setIdFromUrl();
   }
-
   /// Define o valor do campo privado [_id].
   ///
   /// Se o parâmetro [id] for fornecido (não nulo), o valor será atribuído diretamente a [_id].
@@ -29,7 +28,7 @@ class Episode {
     this.name = name ?? '';
   }
 
-  int getId() {
+  int? getId() {
     return _id;
   }
 
@@ -70,8 +69,10 @@ class Episode {
   static fromMap(Map<String, dynamic> map) {
     var episode = Episode(url: map['url']);
 
-    //Métodos preparados para receber valor null no parâmetro
-    episode.setId(map['id']); 
+    int? id = episode.getId();
+    if (id == null) {
+      episode.setId(map['id']); 
+    }
     episode.setName(map['name']);
     
     return episode;

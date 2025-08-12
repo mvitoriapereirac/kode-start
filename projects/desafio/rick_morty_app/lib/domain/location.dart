@@ -3,9 +3,7 @@ class Location {
   final String name; 
   final String url;
 
-  Location({required this.name, required this.url}) {
-    _setIdFromUrl();
-  }
+  Location({required this.name, required this.url});
 
   int getId() {
     return _id;
@@ -64,8 +62,7 @@ class Location {
   /// Se `'id'` não for fornecido, ele poderá ser definido
   /// posteriormente por meio de [setId].
   static fromMap(Map<String, dynamic> map) {
-    var location = Location(url: map['url'], name: map['url']);
-
+    var location = Location(url: map['url'], name: map['name']);
     //Método preparado para receber valor null no parâmetro
     location.setId(map['id']); 
     

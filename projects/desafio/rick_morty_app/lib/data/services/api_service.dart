@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ApiService {
   final Dio _dio = Dio();
-  final String baseUrl = 'https://https://rickandmortyapi.com/api/';
+  final String baseUrl = 'https://rickandmortyapi.com/api/';
   ApiService._internal() {
     _dio.options.baseUrl = baseUrl;
     _dio.options.connectTimeout = const Duration(seconds: 5);
