@@ -3,6 +3,7 @@ import 'package:rick_morty_app/data/services/api_service.dart';
 import 'package:rick_morty_app/domain/character.dart';
 import 'package:rick_morty_app/domain/character_repository.dart';
 import 'package:rick_morty_app/domain/utils/result.dart';
+import 'package:rick_morty_app/domain/utils/similarity.dart';
 
 class CharacterRepo extends ChangeNotifier implements CharacterRepository {
   CharacterRepo({required ApiService apiService})
@@ -29,10 +30,27 @@ class CharacterRepo extends ChangeNotifier implements CharacterRepository {
   }
 
   @override
-  Future<bool> saveCache(Character char) {
-    // TODO: implement saveCache
-    throw UnimplementedError();
-  }
+  List<Character> getRelatedCharacters(Character target, List<Character> loadedCharacters, {double minSimilarity = 0.2}) {
+    final targetEpisodesIds = target.appearedAt.map((e) => e.getId()).toSet();
+    
+    final related = loadedCharacters
+       .where((c) => c.id != target.id)
+       .map((c) {
+        final characterEpisodesIds = c.appearedAt.map((e) => e.getId()).toSet();
+        final similarity = jaccardIndex(targetEpisodesIds, characterEpisodesIds);
+        return (character: c, similarity: similarity);
+       })
+       .where((entry) => entry.similarity >= minSimilarity)
+       .toList();
 
+    related.sort((a, b) => b.similarity.compareTo(a.similarity));
+
+    final uniqueRelated = <int, Character>{};
+    for (var entry in related) {
+      uniqueRelated.putIfAbsent(entry.character.id, () => entry.character);
+    }
+
+    return uniqueRelated.values.toList();
+    }
   
 }

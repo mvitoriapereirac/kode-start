@@ -6,6 +6,7 @@ class Episode {
   Episode({required this.url}) {
     _setIdFromUrl();
   }
+  bool _nameAlreadySet = false;
   /// Define o valor do campo privado [_id].
   ///
   /// Se o parâmetro [id] for fornecido (não nulo), o valor será atribuído diretamente a [_id].
@@ -25,7 +26,11 @@ class Episode {
   }
 
   void setName(String? name) {
+    if (_nameAlreadySet) { 
+      return;
+    }
     this.name = name ?? '';
+    _nameAlreadySet = true;
   }
 
   int? getId() {

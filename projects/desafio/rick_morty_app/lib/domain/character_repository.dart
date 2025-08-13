@@ -4,5 +4,5 @@ import 'package:rick_morty_app/domain/utils/result.dart';
 
 abstract class CharacterRepository implements ChangeNotifier {
   Future<Result<List<Character>>> getCharactersList(int? page);
-  Future<bool> saveCache(Character char);
+  List<Character> getRelatedCharacters(Character target, List<Character> loadedCharacters, {double minSimilarity = 0.2});
 }

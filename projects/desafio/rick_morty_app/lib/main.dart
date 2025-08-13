@@ -3,8 +3,7 @@ import 'package:rick_morty_app/dependencies.dart';
 import 'package:rick_morty_app/routing/router.dart';
 import 'package:provider/provider.dart';
 
-
-void main() {
+void main() async {
   injectDependencies();
 }
 

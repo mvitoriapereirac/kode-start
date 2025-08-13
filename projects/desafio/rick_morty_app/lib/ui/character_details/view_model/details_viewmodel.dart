@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rick_morty_app/domain/character.dart';
-import 'package:rick_morty_app/domain/episode_repository.dart';
-
-// class DetailsViewModel extends ChangeNotifier {
-//   
+import 'package:rick_morty_app/domain/character_repository.dart';
+import 'package:rick_morty_app/domain/episode_repository.dart';  
 
 class DetailsViewModel extends ChangeNotifier {
   final EpisodeRepository _episodeRepo;
+  final CharacterRepository _characterRepo;
+  final List<Character> loadedCharacters;
+  List<Character>? relatedCharacters;
   Character character;
   
   bool _isLoading = false;
@@ -14,12 +15,15 @@ class DetailsViewModel extends ChangeNotifier {
 
   DetailsViewModel({
     required EpisodeRepository episodeRepository,
-    required this.character
-  }) : _episodeRepo = episodeRepository {
+    required CharacterRepository characterRepository,
+    required this.character,
+    required this.loadedCharacters
+  }) : _episodeRepo = episodeRepository, _characterRepo = characterRepository {
+    getRelatedCharacters();
     getEpisode();
   }
 
-  String errorMessage = 'lorem ipsum';
+  String errorMessage = '';
 
   Future<void> getEpisode() async {
     _isLoading = true;
@@ -43,7 +47,15 @@ class DetailsViewModel extends ChangeNotifier {
     }
 
     final episode = response.data;
-    character.appearedAt[0].name = episode!.name;
+    character.appearedAt[0].setName(episode!.name);
+    notifyListeners();
+  }
+
+  void getRelatedCharacters() {
+    if (loadedCharacters.isEmpty) {
+      return;
+    }
+    relatedCharacters = _characterRepo.getRelatedCharacters(character, loadedCharacters);
     notifyListeners();
   }
 }

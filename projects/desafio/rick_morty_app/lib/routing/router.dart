@@ -25,6 +25,7 @@ GoRouter router(
           child: CharactersListScreen(
             viewModel: CharactersViewModel(
               characterRepo: context.read(),
+              favoritesRepo: context.read()
             )
           ),
         );
@@ -32,12 +33,16 @@ GoRouter router(
     GoRoute(
       path: Routes.details,
       pageBuilder: (context, state) {
-        final character = state.extra as Character;
+      final data = state.extra as ({Character character, List<Character> loaded});
+      final character = data.character;
+      final loaded = data.loaded;
         return NoTransitionPage(
           child: CharacterDetailsScreen(
             viewModel: DetailsViewModel(
               episodeRepository: context.read(),
-              character: character
+              characterRepository: context.read(),
+              character: character,
+              loadedCharacters: loaded
               ),
           ),
         );
