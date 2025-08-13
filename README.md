@@ -1,6 +1,6 @@
 # Rick and Morty App
 
-Um aplicativo Flutter que consome a API do Rick and Morty, que conta com listagem de personagens paginada com scroll infinito e pull-to-refresh, algoritmo de recomendações com base em similaridade de personagens e funcionalidade de eleger personagens favoritos.
+Um aplicativo Flutter que consome a API do Rick and Morty, que conta com listagem de personagens paginada com scroll infinito e pull-to-refresh, algoritmo de recomendações com base em similaridade de personagens e funcionalidade de eleição de personagens favoritos.
 
 ## 📋 Sobre o Projeto
 
@@ -30,7 +30,7 @@ lib/
 ### Domain Layer
 - **Entidades**: Modelos de domínio (`Character`, etc.)
 - **Repositórios**: Contratos/interfaces abstratas
-- **ViewModels**: Lógica de negócio e estado da UI
+- **Enums e estruturas genéricas**: Lógica de negócio e padronização de dados
 
 ### Data Layer
 - **Repositórios**: Implementações concretas dos contratos de domínio
@@ -44,7 +44,7 @@ lib/
 
 ## ⚠️ Nota Arquitetural
 
-> **Importante**: Este projeto replica um padrão presente na documentação oficial do Flutter onde abstrações de repository (camada de domínio) estendem `ChangeNotifier` (conceito de UI). Embora funcional e, em muitos casos, suficiente, isso tecnicamente quebra a separação de responsabilidades, pois a camada de domínio não deveria conhecer conceitos da camada de apresentação. Em projetos enterprise, seria mais apropriado usar BLoC ou uma implementação de ViewModel que não dependa diretamente do framework.
+> **Importante**: Este projeto replica um padrão presente na documentação oficial do Flutter onde abstrações de repository (camada de domínio) estendem `ChangeNotifier` (conceito de UI). Embora funcional e, em muitos casos, suficiente, isso tecnicamente quebra a separação de responsabilidades, pois a camada de domínio não deveria conhecer conceitos da camada de apresentação. Em projetos enterprise, seria mais apropriado usar BLoC ou uma implementação que não dependa diretamente do framework.
 
 ## 🛠️ Tecnologias e Ferramentas
 
@@ -52,7 +52,7 @@ lib/
 - **go_router**: Navegação declarativa e type-safe
 - **provider**: Gerenciamento de estado e injeção de dependência
 - **shared_preferences**: Persistência local de dados
-- **http**: Comunicação com APIs REST
+- **dio**: Comunicação com APIs REST
 
 ### Padrões de Projeto Implementados
 
@@ -130,7 +130,7 @@ Implementação do **Coeficiente de Jaccard** para calcular similaridade entre p
 
 ```
 API → Repository → ViewModel → UI
- ↓
+        ↓
 SharedPreferences (Favoritos)
 ```
 
@@ -196,7 +196,7 @@ lib/
 ├── ui/                          # Camada de Apresentação
 │   ├── characters_list/         # Tela de lista
 │   ├── character_details/       # Tela de detalhes
-│   ├── character_details/       # Tela de detalhes
+│   ├── character_viewmodel/     # view model
 │   └── ... (outros elementos)
 │   └── core/                    # Componentes compartilhados
 └── routing/                     # Configuração de rotas
@@ -210,18 +210,31 @@ lib/
 - [ ] Modo offline com cache
 - [ ] Animações de transição
 - [ ] Testes unitários e de widget
+- [ ] Unificação de personalizações de estilo do app em ui/themes
+- [ ] Desenvolvimento de um banco de dados e APIs em um servidor que resolvam o problema logístico do carregamento de favoritos dependente do carregamento de personagens no app
 
 ## 📋 Considerações Técnicas
 
 ### Performance
 - **Lazy Loading**: Carregamento sob demanda
-- **Image Caching**: Cache automático de imagens
+- **Caching**: Cache de dados em memória
 - **State Management**: Otimização de rebuilds
 
 ### Escalabilidade
 - **Clean Architecture**: Facilita manutenção e extensão
 - **Dependency Injection**: Desacoplamento entre camadas
 - **Repository Pattern**: Abstração da camada de dados
+
+### Pontos de melhoria
+- **Desacoplamento de entidades do domain**: 
+As entidades declaradas no domain, nessa fase de MVP, é utilizada como objeto recebido pela API, quando deveria existir outra classe dedicada para isso. Dessa forma, métodos como .fromMap devem ser redirecionados para objetos da camada de dados, prontos para lidar com a resposta das APIs;
+- **Implementação de Themes e melhorias de UX/UI**: 
+O design da aplicação deverá ser componentizado; para isso, serão usados os widgets de Theme do Flutter. No futuro, também devem ser implementados o toggle de modos claro/escuro, bem como responsividade. Preocupações de acessibilidade (como contraste das telas, adaptabilidade ao modo de uso com VoiceOver/TalkBack) também estão no horizonte. 
+- **Documentação de código**:
+A documentação das classes e métodos do código foi iniciada, porém, em razão do prazo para entrega, não foi possível dar continuidade a essa tarefa. No futuro, deve-se incrementar a documentação dos métodos faltantes.
+- **Testes automatizados**:
+Testes unitários, de interface e de integração deverão ser desenvolvidos nas próximas iterações do projeto. 
+
 
 ---
 
