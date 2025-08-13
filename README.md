@@ -1,337 +1,228 @@
-# Kode Start by Kobe
-
-Neste repositório se encontram os aplicativos desenvolvidos durante as aulas, outros projetos desenvolvidos ao longo do programa e, também, documentações
-
-## Links úteis
-- Dart Tour: https://dart.dev/guides/language/language-tour
-- Projects: https://github.com/kobeapps/kode-start/tree/main/projects
-
-## Dart
-Dart é uma linguagem de programação lançada primeiramente em 2011, sua aplicação inicial era substituir o JavaScript como linguagem principal de desenvolvimento Web. Hoje em dia seu principal uso é através do framework Flutter.
-
-É uma linguagem estaticamente tipada, isto é, após um tipo ser atribuído o mesmo não pode mais ser alterado. Sua estrutura é muito parecida com a do Java.
-
-## Hello World
-Uma ótima maneira de entender a estrutura básica de uma linguagem é conhecendo como fazer o mais básico e conhecido dos códigos, o "Hello World". Sua estrutura em dart é desta maneira:
-
-    void main() {
-     print('Olá, Mundo!');
-    }
-
-## Comentários
-    // Para adicionar um comentário basta escrevê-lo desta maneira.
-    
-    /*
-    Mas se tiver que falar muita coisa
-    Você pode escrever desta maneira
-    */
-    
-    /// E se quiser documentar uma função ou classe escreva assim.
-
-## Fortemente tipada:
-Dart é fortemente tipada, mas por sua vez não é necessário definir os tipos explicitamente, podendo se utilizar. Por exemplo ao atribuir a variável:
-
-    var value = 1;
-
-value é inferido como sendo um inteiro. Logo atribuir um valor de um tipo diferente na sequência, como um booleano, resultará em um erro.
-
-    var value = 1;
-    value = false; //Erro
-
-Se por alguma necessidade for necessário que o tipo seja dinâmico, existe um tipo especial que foge desta regra, o dynamic, que permite fazer essas atribuições. Porém perdem-se todos os benefícios de uma linguagem fortemente tipada e aumenta e muito a chance de alguma atribuição errada passar despercebida.
-
-    dynamic value = 1;
-    value = false;
-
-## Palavras-chave
-
-Se você quer que uma variável nunca seja alterada deve-se usar final ou const, em vez de usar var ou somente o tipo. Uma variável definida como final pode ter seu valor definido apenas uma vez, já uma variável const é uma constante de tempo de compilação. (Uma variável const é implicitamente final)
-
-Se a constante estiver em uma classe deve ser marcado como static const, assim a mesma variável será compartilhada por todas as instâncias da classe e também ser acessível sem instanciar a classe.
-
-    final name = 'Bob';
-    final String nickname = 'Bobby';
-
-  
-
-    class DetailsPage {
-     static const routeName = '/details';
-    }
-
-## Tipos de variáveis
-
-### Números:
-
-Dart possui int e double que são subtipos de num;
-
-    int a = 1;
-    double b = 0.1;
-    num c = a + b;
-
-### Booleanos:
-
-    bool a = true;
-    bool b = false;
-
-### Strings:
-
-Strings podem ser atribuidas com aspas simples ou duplas
-
-    String a = 'a';
-    String b = "b";
-
-A interpolação pode ser feita usando um cifrão
-
-    int number = 1;
-    String text = "$number";
-
-No caso de ser uma expressão é necessário adicionar chaves.
-
-    int number = 1;
-    String text = "${number.isEven}";
-
-### Listas:
-
-    var list = [1, 2, 3];
-    var list2 = [...list];
-    
-    var nav = [
-     'Home',
-     'Furniture',
-     'Plants',
-     if (promoActive) 'Outlet',
-     promoActive ? 'Sale' : 'Normal
-    ];
-
-### Mapas/Dicionários:
-
-    var nobleGases = {
-     2: 'helium',
-     10: 'neon',
-     18: 'argon',
-    };
-
-### Generics:
-
-Tipos como listas e mapas possuem possibilidade de utilizar generics para definir os tipos de seus valores internos.
-
-    List<dynamic> myList;
-    Map<dynamic, dynamic> myMap;
-    
-    List<int> myList;
-    Map<String, bool> myMap;
-
-## Propriedades privadas:
-
-Em Dart não existem palavras como public, protected, e private, para definir uma variável, função ou classe como privada e que só possa ser acessada dentro de determinado contexto basta que seu nome comece com um underline (_);
-
-    class _Class {}
-    var _variable;
-    void _function(){}
-
-## Controle de fluxo e repetição
-
-    if (year >= 2001) {
-     print('21st century');
-    } else if (year >= 1901) {
-     print('20th century');
-    }
-    
-    final maior = a > b ? a : b;
-    
-    switch (expression) {
-     case value1:
-     // Code to execute if expression matches value1
-     break;
-     case value2:
-     // Code to execute if expression matches value2
-     break;
-     // ... more cases
-     default:
-     // Code to execute if no case matches
-     break;
-    }
-
-    for (final object in flybyObjects) {
-     print(object);
-    }
-
-    for (int month = 1; month <= 12; month++) {
-     print(month);
-    }
-
-    while (year < 2016) {
-     year += 1;
-    }
-
-  
-
-## Null safety:
-
-Dart recentemente recebeu suporte a null safety, isso significa que é possível definir quais variáveis podem ou não receber null. O que tornou o seu analisador muito mais eficiente não permitindo que uma variável seja utilizada antes de ser definida.
-
-    void main() {
-     int value;
-     value = 0;
-     print(value);
-    }
-
-Dependendo do contexto de declaração de uma variável é necessário utilizar a palavra-chave late. Isto só é necessário em casos que o próprio Dart não consegue detectar previamente que uma variável será definida antes de ser executada.
-
-    late int value;
-
-    void main() {    
-     value = 0;    
-     print(value);    
-    }
-
-E quando esta variável pode ser nula, mas quando iremos utilizá-la, a mesma já terá seu valor definido, podemos usar uma exclamação.
-
-    int? value;
-        
-    void main() {    
-     value = 0;    
-     print(value!.toDouble());    
-    }
-
-E se quisermos que uma variável seja nula? Basta Adicionar uma interrogação junto ao tipo.
-
-    String? value;
-
-Além do null safety, o Dart também possui operadores null-aware.
-
-    main() async {
-     String? value;
-     String? trimmedValue = value?.trim();
-     String secondValue = value ?? '';
-    }
-
-  
-
-## Parâmetros:
-
-Dart dá suporte a parâmetros obrigatórios, opcionais, nomeados e posicionais.
-
-    void enableFlags({required bool bold, bool? hidden}) {...}
-    void enableFlags({required bool bold, bool hidden = false}) {...}
-    enableFlags(bold: true, hidden: false);
-
-    String say(String from, String msg, [String? device]) {
-     var result = '$from says $msg';
-     if (device != null) {
-     result = '$result with a $device';
-     }
-     return result;
-    }
-    
-    assert(say('Bob', 'Howdy') == 'Bob says Howdy');
-    assert(say('Bob', 'Howdy', 'smoke signal') == 'Bob says Howdy with a smoke signal');
-
-## Funções:
-
-Dart possui suporte a funções nomeadas e anônimas, arrow functions, inclusive declaração como variáveis com tipagem de retorno e de parâmetros.
-
-    int sum(int a, int b) {return a + b;}
-    int sum2(int a, int b) => a + b;
-    int Function (int, int) sum3;
-    sum3 = (int a, int b) => a + b;
-
-  
-
-    const list = ['apples', 'bananas', 'oranges'];
-    list.forEach((item) {
-     print('${list.indexOf(item)}: $item');
-    });
-
-  
-
-## Classes:
-
-Possui classes abstratas, uso de implements e extends, além de enums e extensions.
-
-    import 'dart:math';
-
-    class Point {
-     static const double xOrigin = 0;
-     static const double yOrigin = 0;
-     double x;
-     double y;
-     Point(this.x, this.y);
-    
-     // Named constructor
-    
-     Point.origin()
-     : x = xOrigin,
-     y = yOrigin;
-     double distanceToOrigin() {
-     return sqrt(x * x + y * y);
-     }
-    }
-    
-      
-    
-    class Point3d extends Point {
-     static const double zOrigin = 0;
-     double z;
-     Point3d(double x, double y, this.z) : super(x, y);
-     
-     // Named constructor
-     Point3d.origin(): z = zOrigin, super.origin();
-
-     @override
-     double distanceToOrigin() {
-     return sqrt(x * x + y * y + z * z);
-     }
-    }
-
-    main() {
-     var a = Point(1, 2);
-     var b = Point.origin();
-     var c = Point(Point.xOrigin, 2);
-     print(a.distanceToOrigin());
-    }
-
-  
-
-## Enum:
-
-    enum SelectedColor {
-     primaryColor,
-     secondaryColor,
-    }
-    
-    extension SelectedColorExtension on SelectedColor {
-     String get name => describeEnum(this);
-     String get displayTitle {
-     switch (this) {
-     case SelectedColor.PrimaryColor:
-     return 'This is the Primary Color';
-     case SelectedColor.SecondaryColor:
-     return 'This is the Secondary Color';
-     default:
-     return 'SelectedScheme Title is null';
-     }
-     }
-    }
-
-## Async e Await
-
-Utilização para tarefas que devem ser feitas de forma assíncrona.
-
-    main() async {
-     try {
-     var value = await Future.delayed(Duration(seconds: 1));
-     print(value.a);
-     } catch (e) {
-     print(e);
-     }
-    }
-
-    main() {
-    Future.delayed(Duration(seconds: 1))
-     .then(
-     (value) => print(value.a),
-     )
-     .catchError((error)=>print(error));
-    }
-
+# Rick and Morty App
+
+Um aplicativo Flutter que consome a API do Rick and Morty, que conta com listagem de personagens paginada com scroll infinito e pull-to-refresh, algoritmo de recomendações com base em similaridade de personagens e funcionalidade de eleger personagens favoritos.
+
+## 📋 Sobre o Projeto
+
+Este projeto foi desenvolvido seguindo fielmente a [documentação oficial de arquitetura do Flutter](https://docs.flutter.dev/app-architecture), implementando uma arquitetura em camadas com foco na separação de responsabilidades e manutenibilidade do código.
+
+Alguns dos princípios discutidos na documentação e aplicados no projeto:
+- Arquitetura intencional;
+- Princípio arquitetural de separação de camadas e divisão clara de responsabilidades;
+- Adoção de arquitetura recomendada pelo time do Flutter;
+- MVVM e gerenciamento de estado
+- Injeção de dependência
+
+## 🏗️ Arquitetura
+
+O projeto segue uma arquitetura em camadas bem definida:
+
+### Camadas da Aplicação
+
+```
+lib/
+├── domain/           # Camada de Domínio (Entidades e Contratos)
+├── data/            # Camada de Dados (Implementações e APIs)
+├── ui/              # Camada de Apresentação (Widgets e ViewModels)
+└── routing/         # Configuração de Rotas
+```
+
+### Domain Layer
+- **Entidades**: Modelos de domínio (`Character`, etc.)
+- **Repositórios**: Contratos/interfaces abstratas
+- **ViewModels**: Lógica de negócio e estado da UI
+
+### Data Layer
+- **Repositórios**: Implementações concretas dos contratos de domínio
+- **APIs**: Comunicação com serviços externos (Rick and Morty API)
+- **Storage**: Persistência local (SharedPreferences)
+
+### UI Layer
+- **Screens**: Páginas da aplicação
+- **Widgets**: Componentes reutilizáveis
+- **ViewModels**: Gerenciamento de estado com ChangeNotifier
+
+## ⚠️ Nota Arquitetural
+
+> **Importante**: Este projeto replica um padrão presente na documentação oficial do Flutter onde abstrações de repository (camada de domínio) estendem `ChangeNotifier` (conceito de UI). Embora funcional e, em muitos casos, suficiente, isso tecnicamente quebra a separação de responsabilidades, pois a camada de domínio não deveria conhecer conceitos da camada de apresentação. Em projetos enterprise, seria mais apropriado usar BLoC ou uma implementação de ViewModel que não dependa diretamente do framework.
+
+## 🛠️ Tecnologias e Ferramentas
+
+### Principais Dependencies
+- **go_router**: Navegação declarativa e type-safe
+- **provider**: Gerenciamento de estado e injeção de dependência
+- **shared_preferences**: Persistência local de dados
+- **http**: Comunicação com APIs REST
+
+### Padrões de Projeto Implementados
+
+#### 1. Injeção de Dependência
+```dart
+// Configuração no main.dart
+MultiProvider(
+  providers: [
+    Provider<CharacterRepository>(
+      create: (_) => CharacterRepositoryImpl(),
+    ),
+    Provider<FavoritesRepository>(
+      create: (_) => FavoritesRepositoryImpl(),
+    ),
+    ChangeNotifierProvider<CharactersViewModel>(
+      create: (context) => CharactersViewModel(
+        characterRepo: context.read<CharacterRepository>(),
+        favoritesRepo: context.read<FavoritesRepository>(),
+      ),
+    ),
+  ],
+  child: MyApp(),
+)
+```
+
+#### 2. Singleton Pattern
+Implementado no serviço de API para garantir uma única instância durante o ciclo de vida da aplicação.
+
+#### 3. Repository Pattern
+Abstração da camada de dados com contratos bem definidos:
+
+```dart
+abstract class CharacterRepository {
+  Future<ApiResult<List<Character>>> getCharactersList(int? page);
+  Future<ApiResult<Character>> getCharacterById(String id);
+}
+```
+
+## 🚀 Funcionalidades
+
+### 1. Carregamento Lazy e Paginado
+- **Infinite Scroll**: Carregamento automático ao chegar no final da lista
+- **Pagination**: Implementação eficiente de paginação da API
+- **Pull to Refresh**: Atualização da lista puxando para baixo
+- **Loading States**: Indicadores visuais durante carregamentos
+
+### 2. Sistema de Favoritos
+- Persistência local usando SharedPreferences
+- Toggle de favoritos em tempo real
+- Filtro dedicado para visualizar apenas favoritos
+- Sincronização de estado entre diferentes telas
+
+### 3. Algoritmo de Similaridade
+Implementação do **Coeficiente de Jaccard** para calcular similaridade entre personagens, com base na interseção de episódios em que aparecem.
+
+### 4. Navegação Robusta
+- **Go Router**: Navegação type-safe e declarativa
+- **Deep Linking**: Suporte a navegação por URLs
+- **Route Management**: Organização clara das rotas da aplicação
+
+## 🎨 Interface do Usuário
+
+### Características do Design
+- **Custom Components**: Componentes reutilizáveis e consistentes
+- **Orientadas a design**: Fortemente baseada no protótipo informado no Figma (preocupação com fidedignidade de ícones, dimensões e tamanhos).
+
+
+### Componentes Principais
+- `CharacterCard`: Card reutilizável para exibição de personagens
+- `CustomTabSwitch`: Alternador entre personagens: "Todos" e "Favoritos"
+- `AppBarComponent`: AppBar customizada e consistente
+- `ErrorMessageComponent`: Tratamento visual de erros
+
+## 🔄 Fluxo de Dados
+
+```
+API → Repository → ViewModel → UI
+ ↓
+SharedPreferences (Favoritos)
+```
+
+1. **API Layer**: Faz requisições para a Rick and Morty API
+2. **Repository**: Processa dados e aplica regras de negócio
+3. **ViewModel**: Gerencia estado e notifica mudanças
+4. **UI**: Reage às mudanças de estado e atualiza interface
+
+## 📱 Funcionalidades Implementadas
+
+- ✅ Lista de personagens com scroll infinito
+- ✅ Detalhes do personagem
+- ✅ Sistema de favoritos persistente
+- ✅ Filtro por favoritos
+- ✅ Pull to refresh
+- ✅ Carregamento paginado
+- ✅ Algoritmo de personagens relacionados
+- ✅ Navegação fluida entre telas
+- ✅ Tratamento de erros
+- ✅ Estados de loading
+
+## 🛡️ Tratamento de Erros
+
+O aplicativo implementa tratamento de erros:
+- **Network Errors**: Tratamento de falhas de conectividade
+- **API Errors**: Handling de erros da API externa
+- **User Feedback**: Informação de indisponibilidade disponível para usuário
+
+## 🔧 Como Executar
+
+1. **Clone o repositório**
+```bash
+git clone [url-do-repositorio]
+cd rick_morty_app
+```
+
+2. **Instale as dependências**
+```bash
+flutter pub get
+```
+
+3. **Execute o aplicativo**
+```bash
+flutter run
+```
+
+## 📚 Estrutura de Pastas Detalhada
+
+```
+lib/
+├── main.dart                    # Ponto de entrada da aplicação
+├── domain/                      # Camada de Domínio
+│   ├── character.dart           # Entidade Character
+│   ├── character_repository.dart # Contrato do repositório
+│   └── favorites_repository.dart # Contrato de favoritos
+│   └── episode_repository.dart # Contrato de episodios
+│   └── ... (outros elementos)
+├── data/                        # Camada de Dados
+│   ├── character_repo.dart
+│   └── favorites_repo.dart
+│   └── ... (outros elementos)
+│   └── ... api_service.dart
+├── ui/                          # Camada de Apresentação
+│   ├── characters_list/         # Tela de lista
+│   ├── character_details/       # Tela de detalhes
+│   ├── character_details/       # Tela de detalhes
+│   └── ... (outros elementos)
+│   └── core/                    # Componentes compartilhados
+└── routing/                     # Configuração de rotas
+    └── router.dart
+```
+
+## 🎯 Próximas Implementações
+
+- [ ] Busca por personagens
+- [ ] Filtros avançados (status, espécie, gênero)
+- [ ] Modo offline com cache
+- [ ] Animações de transição
+- [ ] Testes unitários e de widget
+
+## 📋 Considerações Técnicas
+
+### Performance
+- **Lazy Loading**: Carregamento sob demanda
+- **Image Caching**: Cache automático de imagens
+- **State Management**: Otimização de rebuilds
+
+### Escalabilidade
+- **Clean Architecture**: Facilita manutenção e extensão
+- **Dependency Injection**: Desacoplamento entre camadas
+- **Repository Pattern**: Abstração da camada de dados
+
+---
+
+**Desenvolvido seguindo as diretrizes oficiais de arquitetura do Flutter com foco em clean code e separação de responsabilidades.**
