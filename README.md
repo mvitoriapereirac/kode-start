@@ -2,6 +2,9 @@
 
 Um aplicativo Flutter que consome a API do Rick and Morty, que conta com listagem de personagens paginada com scroll infinito e pull-to-refresh, algoritmo de recomendações com base em similaridade de personagens e funcionalidade de eleição de personagens favoritos.
 
+![rick_and_morty_api](https://github.com/user-attachments/assets/2019d742-ac5d-4120-a2fa-dafdb667df9a)
+
+
 ## 📋 Sobre o Projeto
 
 Este projeto foi desenvolvido seguindo fielmente a [documentação oficial de arquitetura do Flutter](https://docs.flutter.dev/app-architecture), implementando uma arquitetura em camadas com foco na separação de responsabilidades e manutenibilidade do código.
@@ -163,7 +166,7 @@ O aplicativo implementa tratamento de erros:
 
 1. **Clone o repositório**
 ```bash
-git clone [url-do-repositorio]
+git clone [[url-do-repositorio]](https://github.com/mvitoriapereirac/kode-start.git)
 cd rick_morty_app
 ```
 
