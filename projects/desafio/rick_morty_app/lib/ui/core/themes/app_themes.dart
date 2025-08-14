@@ -1,0 +1,1 @@
+//TODO: componentizar cores e fontes do app
